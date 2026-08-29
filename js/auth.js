@@ -117,6 +117,26 @@
                 button.disabled = false;
             });
         });
+
+        var googleButton = document.getElementById('googleLoginButton');
+        if (!googleButton) {
+            return;
+        }
+        googleButton.addEventListener('click', function () {
+            googleButton.disabled = true;
+            supabaseClient.auth.signInWithOAuth({
+                provider: 'google',
+                options: { redirectTo: window.location.origin }
+            }).then(function (result) {
+                if (result.error) {
+                    throw result.error;
+                }
+            }).catch(function (error) {
+                console.error('Google sign-in failed:', error);
+                showMessage(message, friendlyError(error), true);
+                googleButton.disabled = false;
+            });
+        });
     }
 
     function setupForgotPassword() {
