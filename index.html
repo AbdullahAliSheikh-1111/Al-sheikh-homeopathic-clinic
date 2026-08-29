@@ -261,38 +261,47 @@
                     <div class="bg-white text-center rounded p-5">
                         <h1 class="mb-4">Book An Appointment</h1>
                         <form class="formspree-form" action="https://formspree.io/f/mzebpylw" method="POST"
-                            data-success-message="Appointment request sent successfully! We will contact you shortly.">
+                            data-success-message="Appointment request sent successfully! We will contact you shortly."
+                            autocomplete="off">
                             <input type="hidden" name="form_type" value="appointment">
+                            <input type="hidden" name="patient_account_name" value="">
+                            <input type="hidden" name="patient_account_email" value="">
+                            <input type="hidden" name="email" value="">
                             <div class="row g-3">
                                 <div class="col-12 col-sm-6">
                                     <input type="text" class="form-control bg-light border-0" placeholder="Your Name"
                                         name="name" pattern="[A-Za-z][A-Za-z .'-]{1,49}" maxlength="50"
                                         title="Please enter a valid name using letters, spaces, apostrophes, or hyphens."
-                                        required style="height: 55px;">
+                                        autocomplete="new-password" required style="height: 55px;">
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <input type="tel" class="form-control bg-light border-0 phone-input" placeholder="Your Phone Number"
                                         name="phone" pattern="[0-9]{10,15}" maxlength="15"
                                         inputmode="numeric" title="Please enter a valid phone number with 10 to 15 digits."
-                                        required style="height: 55px;">
+                                        autocomplete="new-password" required style="height: 55px;">
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <div class="date" id="date" data-target-input="nearest">
+                                    <div class="date position-relative" id="date" data-target-input="nearest">
                                         <input type="text" class="form-control bg-light border-0 datetimepicker-input"
                                             placeholder="Date" data-target="#date" data-toggle="datetimepicker"
-                                            name="appointment_date" required style="height: 55px;">
+                                            name="appointment_date" autocomplete="new-password" required style="height: 55px;">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <div class="time" id="time" data-target-input="nearest">
+                                    <div class="time position-relative" id="time" data-target-input="nearest">
                                         <input type="text" class="form-control bg-light border-0 datetimepicker-input"
                                             placeholder="Time" data-target="#time" data-toggle="datetimepicker"
-                                            name="appointment_time" required style="height: 55px;">
+                                            name="appointment_time" autocomplete="new-password" required style="height: 55px;">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <button class="btn btn-primary w-100 py-3" type="submit">Make An
                                         Appointment</button>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <small class="d-block text-dark-50">
+                                        Clinic timing: 5:00 PM to 9:30 PM only. Appointments can be booked within this time window.
+                                    </small>
                                 </div>
                             </div>
                         </form>

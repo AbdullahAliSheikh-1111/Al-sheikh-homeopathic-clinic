@@ -3,7 +3,14 @@
 
     var supabaseUrl = 'https://rvpolwwltlarxuuuwvws.supabase.co';
     var supabasePublishableKey = 'sb_publishable_vzPHDdimsa-G-7gndwVM8A_GxACuj2i';
-    var supabaseClient = window.supabase.createClient(supabaseUrl, supabasePublishableKey);
+
+    if (!window.supabase || !window.supabase.createClient) {
+        console.error('Supabase JS SDK failed to load.');
+        return;
+    }
+
+    window.supabaseClient = window.supabase.createClient(supabaseUrl, supabasePublishableKey);
+    var supabaseClient = window.supabaseClient;
     var authNav = document.getElementById('authNav');
 
     function getRedirectUrl(page) {
