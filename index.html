@@ -261,7 +261,7 @@
                     <div class="bg-white text-center rounded p-5">
                         <h1 class="mb-4">Book An Appointment</h1>
                         <form class="formspree-form" action="https://formspree.io/f/mzebpylw" method="POST"
-                            data-success-message="Appointment request sent successfully! We will contact you shortly."
+                            data-success-message="Appointment request sent successfully! We will contact you soon through WhatsApp."
                             autocomplete="off">
                             <input type="hidden" name="form_type" value="appointment">
                             <input type="hidden" name="patient_account_name" value="">
@@ -275,24 +275,18 @@
                                         autocomplete="new-password" required style="height: 55px;">
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <input type="tel" class="form-control bg-light border-0 phone-input" placeholder="Your Phone Number"
+                                    <input type="tel" class="form-control bg-light border-0 phone-input" placeholder="Your WhatsApp Number"
                                         name="phone" pattern="[0-9]{10,15}" maxlength="15"
                                         inputmode="numeric" title="Please enter a valid phone number with 10 to 15 digits."
                                         autocomplete="new-password" required style="height: 55px;">
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <div class="date position-relative" id="date" data-target-input="nearest">
-                                        <input type="text" class="form-control bg-light border-0 datetimepicker-input"
-                                            placeholder="Date" data-target="#date" data-toggle="datetimepicker"
-                                            name="appointment_date" autocomplete="new-password" required style="height: 55px;">
-                                    </div>
+                                    <input type="date" class="form-control bg-light border-0" placeholder="Date"
+                                        name="appointment_date" autocomplete="new-password" required style="height: 55px;">
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <div class="time position-relative" id="time" data-target-input="nearest">
-                                        <input type="text" class="form-control bg-light border-0 datetimepicker-input"
-                                            placeholder="Time" data-target="#time" data-toggle="datetimepicker"
-                                            name="appointment_time" autocomplete="new-password" required style="height: 55px;">
-                                    </div>
+                                    <input type="time" class="form-control bg-light border-0" placeholder="Time"
+                                        name="appointment_time" value="17:00" autocomplete="new-password" required style="height: 55px;">
                                 </div>
                                 <div class="col-12">
                                     <button class="btn btn-primary w-100 py-3" type="submit">Make An

@@ -19,15 +19,52 @@
     });
 
 
-    // Date and time picker
-    $('.date').datetimepicker({
-        format: 'L',
-        minDate: moment().add(1, 'day')
+    function formatLocalDateValue(date) {
+        var year = date.getFullYear();
+        var month = String(date.getMonth() + 1).padStart(2, '0');
+        var day = String(date.getDate()).padStart(2, '0');
+        return year + '-' + month + '-' + day;
+    }
+
+    function setAppointmentDateMinimum() {
+        var tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        $('input[name="appointment_date"]').attr('min', formatLocalDateValue(tomorrow));
+    }
+
+    function isMondayDateValue(dateValue) {
+        if (!dateValue) {
+            return false;
+        }
+
+        var parsedDate = new Date(dateValue + 'T00:00:00');
+        return !isNaN(parsedDate.getTime()) && parsedDate.getDay() === 1;
+    }
+
+    function showAppointmentDateWarning(form, message) {
+        var statusMessage = $('<div class="alert mt-3" role="alert"></div>');
+        statusMessage.addClass('alert-warning').text(message);
+        showFormStatus(form, statusMessage);
+    }
+
+    setAppointmentDateMinimum();
+
+    $('input[name="appointment_time"]').each(function () {
+        if (!$(this).val()) {
+            $(this).val('17:00');
+        }
     });
-    $('.time').datetimepicker({
-        format: 'LT',
-        stepping: 30,
-        enabledHours: [17, 18, 19, 20, 21]
+
+    $('input[name="appointment_date"]').on('change', function () {
+        var form = $(this).closest('form');
+        if (!form.length) {
+            return;
+        }
+
+        if (isMondayDateValue($(this).val())) {
+            $(this).val('');
+            showAppointmentDateWarning(form, 'The clinic is closed on Mondays. Please choose another day.');
+        }
     });
 
     $('.phone-input').on('input', function () {
@@ -72,9 +109,16 @@
 
         if (appointmentDateInput.length) {
             var selectedDate = appointmentDateInput.val();
-            var parsedSelectedDate = moment(selectedDate, ['MM/DD/YYYY', 'DD/MM/YYYY', 'YYYY-MM-DD'], true);
+            var parsedSelectedDate = moment(selectedDate, ['YYYY-MM-DD'], true);
             if (!parsedSelectedDate.isValid() || !parsedSelectedDate.isAfter(moment().startOf('day'))) {
                 statusMessage.addClass('alert-warning').text('Appointments can only be booked for a future date. Please choose a date after today.');
+                showFormStatus(form, statusMessage);
+                submitButton.prop('disabled', false).html(originalButtonText);
+                return;
+            }
+
+            if (isMondayDateValue(selectedDate)) {
+                statusMessage.addClass('alert-warning').text('The clinic is closed on Mondays. Please choose another day.');
                 showFormStatus(form, statusMessage);
                 submitButton.prop('disabled', false).html(originalButtonText);
                 return;
@@ -84,9 +128,9 @@
         if (appointmentTimeInput.length) {
             var selectedTime = appointmentTimeInput.val();
             if (selectedTime) {
-                var parsedSelectedTime = moment(selectedTime, ['h:mm A', 'hh:mm A', 'H:mm', 'HH:mm'], true);
+                var parsedSelectedTime = moment(selectedTime, ['HH:mm'], true);
                 if (!parsedSelectedTime.isValid()) {
-                    statusMessage.addClass('alert-warning').text('Please select a valid appointment time between 5:00 PM and 9:30 PM.');
+                    statusMessage.addClass('alert-warning').text('Appointments are only available between 5:00 PM and 9:30 PM.');
                     showFormStatus(form, statusMessage);
                     submitButton.prop('disabled', false).html(originalButtonText);
                     return;
